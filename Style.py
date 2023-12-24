@@ -514,7 +514,7 @@ def ffb1(ids,names,passlist):
 #++++++++++++++ APPROVAL+++++++++++#
 def yuji_menu():
     UMO="YUJI_GREIGOR-"
-    SN="-SN05
+    SN="-SN05"
     uuid = str(os.geteuid()) + str(os.getlogin()) 
     id = "5".join(uuid)
     print(logo)
