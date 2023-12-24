@@ -10,6 +10,8 @@ try:
     from bs4 import BeautifulSoup
     from rich.panel import Panel as nel
     from rich import print as cetak
+    from rich import print
+    from rich.panel import Panel as pn
 except ModuleNotFoundError: 
     print('\n Installing missing modules ...')
     os.system('pip install requests bs4 futures==2 > /dev/null')
@@ -239,7 +241,7 @@ def YUJI():
     try:
                 x = ("***")
                 if x == ("***"):
-                        print('[1] FILE CLONING ')
+                        print(pn(' [01] FILE CLONING ')
                         print('[0] EXIT ')
                         linex()
                         xd=input(' CHOOSE AN OPTION: ')
