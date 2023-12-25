@@ -44,7 +44,7 @@ def linex():
 def main():
         try:
         	    os.system('clear')
-                print(logo)
+            print(logo)
                 print (' EXAMPLE: /sdcard/yuji.py ')
                 file = input (' FILE NAME: ')
                 fileopen = open(file).read()
