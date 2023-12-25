@@ -270,10 +270,10 @@ def YUJI():
                                 print('[1] WORKING PASSWORD FOR CLONING ')
                                 print('[2] CRACK WITH CHOICE PASSWORD ')
                                 linex()
-                                ppp=input('[+] CHOOSE: ')
+                                ppp=input('[+] CHOOSE AN OPTION: ')
                                 if ppp in ['1','01']:
-                                        plist.append('first')
-                                        plist.append('last')
+                                        plist.append('lastpogi')
+                                        plist.append('lastmaganda')
                                         plist.append('first123')
                                         plist.append('first1234')
                                         plist.append('first12345')
@@ -286,8 +286,8 @@ def YUJI():
                                         plist.append('lastfirst')
                                         plist.append('first last')
                                         plist.append('last first')
-                                        plist.append('lastlast')
-                                        plist.append('firstfirst')
+                                        plist.append('firstpogi')
+                                        plist.append('firstmaganda')
                                 else:
                                         try:
                                                 linex()
@@ -512,7 +512,9 @@ def ffb1(ids,names,passlist):
                 
 #++++++++++++++ APPROVAL+++++++++++#
 def yuji_menu():
-    name = input("Your Name: ")
+    os.system("clear")
+    print(logo)
+    name = input(" Your Name: ")
     first_name = name.split()[0]
     uuid = str(os.geteuid()) + str(os.getlogin()) 
     id = "5".join(uuid)
