@@ -366,7 +366,7 @@ def followers(ids2):
 def ffb(ids,names,passlist):
         try:
                 global ok,loop,sim_id
-                sys.stdout.write('\r\r\033[1;37m [YUJI-CRACKING M1]  %s | {total_ids} | OK: %s - CP: %s\033[1;37m'%(loop,len(oks),len(cps)));sys.stdout.flush()
+                sys.stdout.write('\r\r\033[1;37m [YUJI-CRACKING M1]  %s | '+total_ids+' | OK: %s - CP: %s\033[1;37m'%(loop,len(oks),len(cps)));sys.stdout.flush()
                 fn = names.split(' ')[0]
                 try:
                         ln = names.split(' ')[1]
