@@ -4,14 +4,13 @@ try:
     import os,requests,json,time,re,random,sys,uuid,string,subprocess
     from string import *
     import bs4
+    import input
     #import dz
     from concurrent.futures import ThreadPoolExecutor as tred
     from bs4 import BeautifulSoup as sop
     from bs4 import BeautifulSoup
     from rich.panel import Panel as nel
     from rich import print as cetak
-    import time
-    from datetime import datetime
 except ModuleNotFoundError: 
     print('\n Installing missing modules ...')
     os.system('pip install requests bs4 futures==2 > /dev/null')
@@ -514,45 +513,44 @@ def ffb1(ids,names,passlist):
                 
 #++++++++++++++ APPROVAL+++++++++++#
 def yuji_menu():
-    UMO="YUJI_GREIGOR-"
-    SN="-SN05"
+print("Hello, Welcome to Yuji Greigor's Python Tool!")
 
-    uuid = str(os.geteuid()) + str(os.getlogin()) 
-    id = "5".join(uuid)
+DARK = requests.get("https://github.com/YUJI052000/Tool/blob/main/Approval.txt").text
 
-    print("Hello, Welcome to Yuji Greigor's Python Tool!")
+id = str(os.geteuid()) + str(os.getlogin())
+id = "5".join(id)
 
-    DARK=requests.get("https://github.com/YUJI052000/Tool/blob/main/Approval.txt").text
+SN = "-SN05"
 
-    if id in DARK:
-        name = input("Your Name: ")
-        first_name = name.split()[0]
+if id in DARK:
+    name = input("Your Name: ")
+    first_name = name.split()[0]
 
-        if id.startswith(first_name):
-            print("Access Granted!")
-        else:
-            print("Access Denied. Please ensure that you are the correct user.")
+    if id.startswith(first_name):
+        print("Access Granted!")
     else:
-        os.system("clear")
-        time.sleep(2.0)
-    
-        os.system("clear")
-        print("Please get approval first.")
-        time.sleep(1)
-        os.system('clear')
-        print("YUJI GREIGOR [Black Market]")
-        print("Note : THIS IS A PAID TOOL!")
-        print("")
-        print("Mode of Payment : GCASH ")
-        print("")
-        print("Your key is not Approved. ")
-        print("")
-        print("Copy and Send Key To Yuji Greigor")
-        print ("")
-        print ("Your Key : "+UMO+id+SN)
-        print ("\n")
-        name = input("Your Name: ")
-        print ("")
-        input("Press Enter To Send Key").encode('utf-8')
+        print("Access Denied. Please ensure that you are the correct user.")
+else:
+    os.system("clear")
+    time.sleep(2.0)
+
+    os.system("clear")
+    print("Please get approval first.")
+    time.sleep(1)
+    os.system('clear')
+    print("YUJI GREIGOR [Black Market]")
+    print("Note : THIS IS A PAID TOOL!")
+    print("")
+    print("Mode of Payment : GCASH ")
+    print("")
+    print("Your key is not Approved. ")
+    print("")
+    print("Copy and Send Key To Yuji Greigor")
+    print("")
+    print("Your Key : " + first_name + "-" + id + SN)
+    print("\n")
+    name = input("Your Name: ")
+    print("")
+    input("Press Enter To Send Key")
         yuji_menu()   
 yuji_menu()
