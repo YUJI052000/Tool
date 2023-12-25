@@ -55,7 +55,7 @@ def main():
         else:
             print (' INVALID. TRY AGAIN ')
             os.sys.exit()
-                main()
+            main()
 
 if __name__=='__main__':
         main()
