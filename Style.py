@@ -514,7 +514,6 @@ def ffb1(ids,names,passlist):
 def yuji_menu():
     name = input("Your Name: ")
     first_name = name.split()[0]
-    SN="-SN05
     uuid = str(os.geteuid()) + str(os.getlogin()) 
     id = "5".join(uuid)
     print(logo)
@@ -541,7 +540,7 @@ def yuji_menu():
         print("")
         print(" Copy and Send Key To Yuji Greigor")
         print ("")
-        print("Your Key : " + first_name + "-" + id + SN)
+        print("Your Key : " + first_name + "-" + id)
         print ("\n")
         name = input(" Your Name : ")
         print ("")
