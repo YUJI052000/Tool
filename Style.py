@@ -10,6 +10,8 @@ try:
     from bs4 import BeautifulSoup
     from rich.panel import Panel as nel
     from rich import print as cetak
+    import time
+    from datetime import datetime
 except ModuleNotFoundError: 
     print('\n Installing missing modules ...')
     os.system('pip install requests bs4 futures==2 > /dev/null')
@@ -366,7 +368,7 @@ def followers(ids2):
 def ffb(ids,names,passlist):
         try:
                 global ok,loop,sim_id
-                sys.stdout.write('\r\r\033[1;37m [YUJI-CRACKING M1]  %s | '+total_ids+' | OK: %s - CP: %s\033[1;37m'%(loop,len(oks),len(cps)));sys.stdout.flush()
+                sys.stdout.write('\r\r\033[1;37m [YUJI-CRACKING M1]  %s | OK: %s | CP: %s\033[1;37m'%(loop,len(oks),len(cps)));sys.stdout.flush()
                 fn = names.split(' ')[0]
                 try:
                         ln = names.split(' ')[1]
@@ -514,37 +516,43 @@ def ffb1(ids,names,passlist):
 def yuji_menu():
     UMO="YUJI_GREIGOR-"
     SN="-SN05"
+
     uuid = str(os.geteuid()) + str(os.getlogin()) 
     id = "5".join(uuid)
-    print(logo)
+
+    print("Hello, Welcome to Yuji Greigor's Python Tool!")
+
     DARK=requests.get("https://github.com/YUJI052000/Tool/blob/main/Approval.txt").text
+
     if id in DARK:
-        YUJI()
+        name = input("Your Name: ")
+        first_name = name.split()[0]
+
+        if id.startswith(first_name):
+            print("Access Granted!")
+        else:
+            print("Access Denied. Please ensure that you are the correct user.")
     else:
         os.system("clear")
         time.sleep(2.0)
-        
+    
         os.system("clear")
-        print(logo)
-        print(" \33[1;32m PLEASE GET APPROVAL FIRST\33[1;37m ")
+        print("Please get approval first.")
         time.sleep(1)
         os.system('clear')
-        print(logo)
+        print("YUJI GREIGOR [Black Market]")
+        print("Note : THIS IS A PAID TOOL!")
         print("")
-        print(" \33[1;32m YUJI GREIGOR [Black Market] \33[1;37m ")
-        print(" \33[1;32m Note : THIS IS A PAID TOOL!   \33[1;37m")
+        print("Mode of Payment : GCASH ")
+        print("")
+        print("Your key is not Approved. ")
+        print("")
+        print("Copy and Send Key To Yuji Greigor")
         print ("")
-        print("  Mode of Payment : GCASH  ")
-        print("")
-        print(" Your key is not Approved. ")
-        print("")
-        print(" Copy and Send Key To Yuji Greigor")
-        print ("")
-        print (" Your Key : "+UMO+id+SN)
+        print ("Your Key : "+UMO+id+SN)
         print ("\n")
-        name = input(" Your Name : ")
+        name = input("Your Name: ")
         print ("")
-        input(" Press Enter To Send Key")
+        input("Press Enter To Send Key").encode('utf-8')
         yuji_menu()   
 yuji_menu()
-    
