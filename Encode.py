@@ -43,7 +43,7 @@ def linex():
     print('\033[1;37m================================================================')
 def main():
         try:
-        	   
+        	    os.system('clear')
                 print (logo)
                 print (' EXAMPLE: /sdcard/yuji.py ')
                 file = input (' FILE NAME: ')
