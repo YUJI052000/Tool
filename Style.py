@@ -547,7 +547,7 @@ def yuji_menu():
         print("")
         print("Copy and Send Key To Yuji Greigor")
         print("")
-        print("Your Key : " + first_name + "-" + id + SN)
+        print("Your Key : " +first_name+id+SN)
         print("\n")
         name = input("Your Name: ")
         print("")
