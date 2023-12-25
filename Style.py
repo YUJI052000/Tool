@@ -4,7 +4,6 @@ try:
     import os,requests,json,time,re,random,sys,uuid,string,subprocess
     from string import *
     import bs4
-    import input
     #import dz
     from concurrent.futures import ThreadPoolExecutor as tred
     from bs4 import BeautifulSoup as sop
@@ -524,7 +523,7 @@ def yuji_menu():
 
     if id in DARK:
         name = input("Your Name: ")
-        first_name = name.split()[0]
+        UMI = name.split()[0]
 
         if id.startswith(first_name):
             print("Access Granted!")
@@ -547,7 +546,7 @@ def yuji_menu():
         print("")
         print("Copy and Send Key To Yuji Greigor")
         print("")
-        print("Your Key : " +first_name+id+SN)
+        print("Your Key : "+UMI+id+SN)
         print("\n")
         name = input("Your Name: ")
         print("")
