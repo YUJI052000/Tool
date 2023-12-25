@@ -45,7 +45,7 @@ def main():
         try:
         	   
                 print (logo)
-                print (' EXAMPLE: /sdcard/yuji.py
+                print (' EXAMPLE: /sdcard/yuji.py ')
                 file = input (' FILE NAME: ')
                 fileopen = open(file).read()
                 a = compile(fileopen, 'dg', 'exec')
