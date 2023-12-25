@@ -42,7 +42,6 @@ logo=(f"""{GREEN}
 def linex():
     print('\033[1;37m================================================================')
 def main():
-        try:
         	    os.system('clear')
                 print(logo)
                 try:
