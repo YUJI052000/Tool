@@ -98,7 +98,7 @@ def menu():
     print(logo)
     print ('[1] NEW FACEBOOK ACCOUNT GENERATOR ')
     linex()
-    sel = input('Select: ')
+    sel = input('CHOOSE: ')
     if sel in['1', '01']:
         create().start()
     else:
@@ -146,7 +146,7 @@ class create:
             'sec-fetch-site': 'none',
             'sec-fetch-user': '?1',
             'upgrade-insecure-requests': '1',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Vivaldi/6.5.3206.42',
             'viewport-width': '1365'}
         headers1 = {
     'authority': 'm.facebook.com',
@@ -162,7 +162,7 @@ class create:
             'sec-fetch-mode': 'navigate',
             'sec-fetch-site': 'none',
             'upgrade-insecure-requests': '1',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36'
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         }
         print(' [•] ON AIRPLANE MODE IF NO RESULT. ')
         linex()
