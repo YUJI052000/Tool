@@ -59,7 +59,7 @@ def main():
                 print (' SUCCESSFULLY ENCRYPTION : ')
                 linex()
                 time.sleep(1)
-                aq = input (' YOU WANT TO ENCRYPT AGAIN? (y/n)
+                aq = input (' YOU WANT TO ENCRYPT AGAIN? (y/n) ')
                 if aq =="":
                         print (' INVALID ')
                         os.sys.exit()
