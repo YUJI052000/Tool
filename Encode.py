@@ -56,9 +56,9 @@ def main():
             print (' INVALID. TRY AGAIN ')
             os.sys.exit()
 except IOError:
-    print (' FILE NOT FOUND ')
-    time.sleep(1)
-    main()
+                print (' FILE NOT FOUND ')
+                time.sleep(1)
+                main()
 
 if __name__=='__main__':
-    main()
+        main()
