@@ -1,24 +1,28 @@
 import os
-import sys
+import time
 
-def get_admin():
-    try:
-        if sys.argv[-1] == "elevate":
-            del sys.argv[-1]
-        else:
-            sys.exit("Script must be run as administrator")
-    except IndexError:
-        sys.exit("Script must be run as administrator")
+def turn_on_airplane_mode():
+    os.system("netsh interface set interface \"Wi-Fi\" admin=disable")
+    print("Airplane mode turned on.")
 
-def unblock_ip(ip_address):
-    command = f'netsh advfirewall firewall delete rule name="Blocked IP: {ip_address}"'
-    os.system(command)
+def turn_off_airplane_mode():
+    os.system("netsh interface set interface \"Wi-Fi\" admin=enable")
+    print("Airplane mode turned off.")
 
-def main():
-    get_admin()
-    ip_address = input("Enter the IP address you want to unblock: ")
-    unblock_ip(ip_address)
-    print(f"Successfully unblocked IP address: {ip_address}")
+def use_airplane_mode_for_minutes(minutes):
+    start_time = time.time()
+    while True:
+        turn_on_airplane_mode()
+        time.sleep(10)
+        turn_off_airplane_mode()
+        time.sleep(10)
+
+        elapsed_time = time.time() - start_time
+        if elapsed_time >= minutes * 60:
+            break
 
 if __name__ == "__main__":
-    main()
+    # Uncomment the function you want to run
+    #turn_on_airplane_mode()
+    #turn_off_airplane_mode()
+    use_airplane_mode_for_minutes(5) # Adjust this number to the number of minutes you want to use airplane mode
