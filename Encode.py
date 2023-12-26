@@ -1,28 +1,40 @@
-import os
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 import time
 
-def turn_on_airplane_mode():
-    os.system("netsh interface set interface \"Wi-Fi\" admin=disable")
-    print("Airplane mode turned on.")
+def facebook_login(email, password):
+    # Set up the Chrome WebDriver
+    driver = webdriver.Chrome()
 
-def turn_off_airplane_mode():
-    os.system("netsh interface set interface \"Wi-Fi\" admin=enable")
-    print("Airplane mode turned off.")
+    # Navigate to the Facebook login page
+    driver.get("https://www.facebook.com/")
 
-def use_airplane_mode_for_minutes(minutes):
-    start_time = time.time()
-    while True:
-        turn_on_airplane_mode()
-        time.sleep(10)
-        turn_off_airplane_mode()
-        time.sleep(10)
+    # Locate the email field using the id attribute
+    email_field = driver.find_element_by_id("email")
 
-        elapsed_time = time.time() - start_time
-        if elapsed_time >= minutes * 60:
-            break
+    # Locate the password field using the id attribute
+    password_field = driver.find_element_by_id("pass")
 
-if __name__ == "__main__":
-    # Uncomment the function you want to run
-    #turn_on_airplane_mode()
-    #turn_off_airplane_mode()
-    use_airplane_mode_for_minutes(5) # Adjust this number to the number of minutes you want to use airplane mode
+    # Enter the email and password
+    email_field.send_keys(email)
+    password_field.send_keys(password)
+
+    # Click the "Log In" button
+    driver.find_element_by_id("u_0_b").click()
+
+    # Wait for the user to be logged in
+    wait = WebDriverWait(driver, 10)
+    element = wait.until(EC.presence_of_element_located((By.ID, "fb-timeline-cover-name")))
+
+    # Print a success message
+    print("Successfully logged in!")
+
+    # Keep the browser open for 5 seconds before closing
+    time.sleep(5)
+    driver.quit()
+
+# Replace 'your_email@example.com' and 'your_password' with your actual email and password
+facebook_login('your_email@example.com', 'your_password')
