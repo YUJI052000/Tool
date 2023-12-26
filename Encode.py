@@ -546,15 +546,15 @@ def yuji_menu():
         print(" Your Key : " + first_name + "-" + id)
         print ("")
 
-        time_limit = 0.0833 # hours
+        time_limit = 1 # hours
         key_approval_date = datetime.now()
         key_expiration_date = key_approval_date + timedelta(hours=time_limit)
 
         print(f" KEY EXPIRATION DATE: {key_expiration_date}")
-        
+        print("")
         print(f" YOUR KEY WILL BE REMOVED FROM APPROVAL AFTER {time_limit} HOUR/S")
-        
-        input(" Press Enter To Send Key")
+        print("")
+        input(" Press Enter To Send Key ")
 
         time.sleep(time_limit * 2)
         with open("https://github.com/YUJI052000/Tool/blob/main/Approval.txt", "r") as file:
