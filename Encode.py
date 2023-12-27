@@ -72,7 +72,7 @@ class iAmUserAgent:
                 iAmWriting.write(f'dani_random_ua = random.choice([')
                 try:
                        iAmGettingData = ses.get(url=self.url, headers=headers).text
-			           for wAreRandomUserAgents in re.findall('href\=\"/string/(.*?)">(.*?)<',iAmGettingData):
+			        for wAreRandomUserAgents in re.findall('href\=\"/string/(.*?)">(.*?)<',iAmGettingData):
                                 self.total.append(wAreRandomUserAgents[1])
                                 iAmWriting.write(f'"{wAreRandomUserAgents[1]}",')
                                 sys.stdout.write(f"\r [•] Getting UA: [{len(self.total)}] ");sys.stdout.flush();sp(0.009)
