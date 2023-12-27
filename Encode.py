@@ -13,14 +13,13 @@ class GetRandomUserAgent:
         self.total = []
 
     def get_RandomUa(self, limit, sav):
-        data = {
-            'limit':f"{limit}",
-            'action':'generate'
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
         }
         iAmWriting = open(sav,"a")
         iAmWriting.write(f'dani_random_ua = random.choice([')
         try:
-            iAmGettingData = ses.post(url=self.url,data=data).text
+            iAmGettingData = ses.get(url=self.url, headers=headers).text
             for wAreRandomUserAgents in re.findall('href\=\"/string/(.*?)">(.*?)<',iAmGettingData):
                 self.total.append(wAreRandomUserAgents[1])
                 iAmWriting.write(f'"{wAreRandomUserAgents[1]}",')
