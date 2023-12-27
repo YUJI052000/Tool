@@ -1,493 +1,232 @@
+#! /usr/bin/env python3
+try:
+    import requests, json, time, re, random, string, os
+    from requests_toolbelt import MultipartEncoder
+    from rich import print
+    from rich.console import Console
+    from requests.exceptions import RequestException
+    from rich.panel import Panel
+except (Exception, KeyboardInterrupt)as e:
+    exit(f"[Error] {str(e).capitalize()}!")
 
-#color
-R = "\033[1;31m"
-G = "\033[1;32m"
-Y = "\033[1;33m"
-B = "\033[1;34m"
-C = "\033[1;36m"
-W = "\033[1;37m"
-#imports
-import time, os, sys, random
-from os import system as sm
-from sys import platform as pf
-from time import sleep as sp
+Dump, Sukses, Gagal, Jumlah = [], [], [], 0
 
+def Banner():
+    os.system(
+        'cls' if os.name == 'nt' else 'clear'
+    )
+    print(Panel("""[bold red]●[bold yellow] ●[bold green] ●[/]
+[bold red]  ______   __                       _                   
+.' ____ \ [  |                     (_)                  
+| (___ \_| | |--.   ,--.   _ .--.  __   _ .--.   .--./) 
+ _.____`.  | .-. | `'_\ : [ `/'`\][  | [ `.-. | / /'`\; 
+| \____) | | | | | // | |, | |     | |  | | | | \ \._// 
+[bold white] \______.'[___]|__]\'-;__/[___]   [___][___||__].',__`  
+                                               ( ( __)) 
+        [italic red]Facebook auto share - Coded by Rozhak""", width=60, style="bold bright_white")) # Coded by Rozhak
+    return ("Sukses")
 
-##______COLORS____ARE________######
-pwx=[]
-W = '\033[97;1m'
-R = '\033[91;1m'
-G = '\033[92;1m'
-Y = '\033[93;1m'
-B = '\033[94;1m'
-P = '\033[95;1m'
-S = '\033[96;1m'
-N = '\x1b[0m'
-PURPLE ='\x1b[38;5;46m'
-RED = '\033[1;91m'
-WHITE = '\033[1;97m'
-GREEN = '\033[1;32m'
-YELLOW = '\033[1;33m'
-BLUE = '\033[1;34m'
-ORANGE = '\033[1;35m'
-BLACK="\033[1;30m"
-EXTRA ='\x1b[38;5;208m'
-#________________________________________#
+class Main:
 
-logo=(f"""{GREEN}
+    def __init__(self) -> None:
+        pass
 
-       
-                   ██████╗███╗   ███╗███████╗
-                  ██╔════╝████╗ ████║██╔════╝
-                  ╚█████╗ ██╔████╔██║█████╗
-                   ╚═══██╗██║╚██╔╝██║██╔══╝
-                  ██████╔╝██║ ╚═╝ ██║██║
-                  ╚═════╝ ╚═╝     ╚═╝╚═╝
-                                        
-{WHITE}================================================================
-[•] NAME         : YUJI GREIGOR 
-[•] FACEBOOK     : https://www.facebook.com/Yuji.IAmLimitless
-[•] TOOL         : USER AGENT GENERATOR 
-[•] VERSION      : 1.0
-{WHITE}================================================================""")
-def linex():
-    print('\033[1;37m================================================================')
-sm("mkdir /sdcard/UA-GEN")
-#clear
-def clear():
-    if pf in ["win32","win64"]:
-        sm("cls")
-    else:
-        sm("clear")
-    print(logo)
-#menu
-fb = []
-def main():
-    clear()
-    print("[1] VIVO ")
-    print("[2] XIAOMI ")
-    print("[3] SAMSUNG ")
-    print("[4] OPPO ")
-    print("[5] TECNO ")
-    print("[6] INFINIX ")
-    print("[0] EXIT ")
-    linex()
-    select = input("CHOOSE AN OPTION: ")
-    if select == "1":
-        vivo()
-    elif select == "2":
-        xiaomi()
-    elif select == "3":
-        samsung()
-    elif select == "4":
-        oppo()
-    elif select == "5":
-        tecno()
-    elif select == "6":
-    	infinix()
-    elif select == "0":
-        sys.exit(f"BYE")
-    else:
+    def Delay(self, menit, detik, user_ids):
+        global Sukses, Gagal, Jumlah
+        self.total = (menit * 60 + detik)
+        while (self.total):
+            menit, detik = divmod(self.total, 60)
+            print(f"[bold bright_white]   ╰─>[bold green] {int(Jumlah)}[bold white]/[bold green]{str(user_ids)[:20]}[bold white]/[bold green]{menit:02d}:{detik:02d}[bold white] Sukses:-[bold green]{len(Sukses)}[bold white] Gagal:-[bold red]{len(Gagal)}     ", end='\r')
+            time.sleep(1)
+            self.total -= 1
+        return ("Sukses")
+
+    def Cookies(self):
+        global Dump, Jumlah
+        try:
+            Banner()
+            print(Panel(f"[italic white]Silahkan Masukan Cookies[italic green] Halaman Akun Facebook[italic white] Anda Juga Bisa Menggunakan[italic red] Koma[italic white] Untuk Cookies Acak!", width=60, style="bold bright_white", title=">>> Your Cookies <<<", subtitle="╭──────", subtitle_align="left"))
+            your_cookies = Console().input("[bold bright_white]   ╰─> ")
+            for cookies in your_cookies.split(','):
+                if 'i_user=' in str(cookies) or 'c_user=' in str(cookies):
+                    Dump.append(f'{cookies}')
+                else:
+                    continue
+            if len(Dump) == 0:
+                print(Panel(f"[italic red]Semua Cookies Yang Kamu Masukan Salah Silahkan Untuk Mengambil Cookies Di Halaman Facebook!", width=60, style="bold bright_white", title=">>> Cookies Salah <<<"))
+                exit()
+            else:
+                print(Panel(f"[italic white]Silahkan Masukan Link Postingan Pastikan Gunakan Format Mbasic Dan Ada Tombol Bagikan!", width=60, style="bold bright_white", title=">>> Link Postingan <<<", subtitle="╭──────", subtitle_align="left"))
+                link_postingan = Console().input("[bold bright_white]   ╰─> ")
+                if 'https://mbasic.facebook.com/' in str(link_postingan):
+                    print(Panel(f"[italic white]Silahkan Masukan Delay Berbagi Postingan Sebaiknya Gunakan Delay Di Atas[italic red] 60 Detik[italic white] Agar Aman!", width=60, style="bold bright_white", title=">>> Delay Sharing <<<", subtitle="╭──────", subtitle_align="left"))
+                    delay_berbagi = int(Console().input("[bold bright_white]   ╰─> "))
+                    print(Panel(f"[italic white]Sedang Menjalankan Auto Share Ke Halaman Facebook Anda Bisa Menggunakan[italic red] CTRL + Z[italic white] Untuk Berhenti!", width=60, style="bold bright_white", title=">>> Catatan <<<"))
+                    while True:
+                        for self.cookies in Dump:
+                            try:
+                                if 'i_user=' in str(self.cookies):
+                                    self.user_ids = (re.search('i_user=(\d+);', str(self.cookies)).group(1))
+                                else:
+                                    self.user_ids = (re.search('c_user=(\d+);', str(self.cookies)).group(1))
+                                self.Sharing(self.cookies, link_postingan, self.user_ids)
+                                self.Delay(0, delay_berbagi, self.user_ids)
+                                Jumlah += 1
+                            except (KeyboardInterrupt):
+                                print(f"                                                      ", end='\r')
+                                time.sleep(2.5)
+                                continue
+                            except (RequestException) as e:
+                                print(f"                                                      ", end='\r')
+                                time.sleep(1.5)
+                                print(f"[bold bright_white]   ╰─>[bold red] Koneksi Error...", end='\r')
+                                time.sleep(7.5)
+                                continue
+                            except (Exception) as e:
+                                print(f"[bold bright_white]   ╰─>[bold red] {str(e).upper()}", end='\r')
+                                time.sleep(5.5)
+                                print(f"                                                      ", end='\r')
+                                continue
+                        continue
+                else:
+                    print(Panel(f"[italic red]Format Link Postingan Salah Silahkan Masukan Seperti : https://mbasic.facebook.com/story.php?story_fbid=pfbid0F3hKfbeJW5gqxky435p9g3DTDwe1bRRwcMGbyw37AYJhLJbXREComGNARVzg5d4Zl&id=100006609458697!", width=60, style="bold bright_white", title=">>> Link Salah <<<"))
+                    exit()
+        except (Exception) as e:
+            print(Panel(f"[italic red]{str(e).title()}!", width=60, style="bold bright_white", title=">>> Error <<<"))
+            exit()
+
+    def Sharing(self, your_cookies, your_post, user_ids):
+        global Sukses, Gagal
+        with requests.Session() as r:
+            self.android_version = (random.choice(['9', '10', '11', '12', '13']))
+            self.device_model = random.choice(['RMX3661', 'RMX3687', 'RMX3686', 'RMX3241', 'RMX3388', 'RMX3472', 'RMX3471', 'RMX3393', 'RMX3392', 'RMX3612', 'RMX2202', 'RMX2121', 'RMX2176', 'RMX2052', 'RMX2075', 'RMX2076', 'RMX2144', 'RMX2111', 'RMX2200', 'RMX3092', 'RMX3093', 'RMX3042', 'RMX3041', 'RMX3125', 'RMX3122', 'RMX3121', 'RMX2205', 'RMX3161', 'RMX2205', 'RMX3396', 'RMX3572', 'RMX3242'])
+            r.headers.update({
+                'sec-fetch-dest': 'document',
+                'user-agent': f'Mozilla/5.0 (Linux; Android {self.android_version}; {self.device_model}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.5845.92 Mobile Safari/537.36',
+                'upgrade-insecure-requests': '1',
+                'sec-fetch-mode': 'navigate',
+                'accept-language': 'id,en;q=0.9',
+                'connection': 'keep-alive',
+                'sec-fetch-site': 'none',
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'Host': 'mbasic.facebook.com',
+                'sec-fetch-user': '?1',
+                'cache-control': 'max-age=0',
+                'accept-encoding': 'gzip, deflate',
+            })
+            try:
+                response = r.get(your_post, cookies = {
+                    'cookie': your_cookies
+                }).text
+            except (requests.exceptions.TooManyRedirects):
+                print(f"                                                      ", end='\r')
+                time.sleep(1.5)
+                print(f"[bold bright_white]   ╰─>[bold red] Akun {user_ids} Dalam Mode Gratis...", end='\r')
+                time.sleep(3.5)
+                return ("TooManyRedirects")
+            if 'Login ke Akun Anda' in str(response) or 'Login sebagai' in str(response) or 'facebook.com/login.php?' in str(response) or '/login/' in str(response):
+                print(f"                                                      ", end='\r')
+                time.sleep(1.5)
+                print(f"[bold bright_white]   ╰─>[bold red] Login Diperlukan Untuk {user_ids}...", end='\r')
+                time.sleep(3.5)
+                return ("Login Diperlukan")
+            else:
+                if 'href="/composer/mbasic/' in str(response):
+                    self.composer_share = re.search('href="/composer/mbasic/\\?(.*?)"', str(response)).group(1).replace('amp;', '')
+                    response2 = r.get('https://mbasic.facebook.com/composer/mbasic/?{}'.format(self.composer_share), cookies = {
+                        'cookie': your_cookies
+                    }).text
+                    boundary = '----WebKitFormBoundary' \
+                        + ''.join(random.sample(string.ascii_letters + string.digits, 16))
+                    try:
+                        self.share_composer = re.search('action="/composer/mbasic/\\?(.*?)"', str(response2)).group(1).replace('amp;', '')
+                        self.fb_dtsg = re.search('name="fb_dtsg" value="(.*?)"', str(response2)).group(1)
+                        self.jazoest = re.search('name="jazoest" value="(\d+)"', str(response2)).group(1)
+                        self.target = re.search('name="target" value="(\d+)"', str(response2)).group(1)
+                        self.csid = re.search('name="csid" value="(.*?)"', str(response2)).group(1)
+                        self.c_src = re.search('name="c_src" value="(.*?)"', str(response2)).group(1)
+                        self.referrer = re.search('name="referrer" value="(.*?)"', str(response2)).group(1)
+                        self.ctype = re.search('name="ctype" value="(.*?)"', str(response2)).group(1)
+                        self.cver = re.search('name="cver" value="(.*?)"', str(response2)).group(1)
+                        self.waterfall_source = re.search('name="waterfall_source" value="(.*?)"', str(response2)).group(1)
+                        self.privacyx = re.search('name="privacyx" value="(\d+)"', str(response2)).group(1)
+                        self.appid = re.search('name="appid" value="(.*?)"', str(response2)).group(1)
+                        self.sid = re.search('name="sid" value="(.*?)"', str(response2)).group(1)
+                        self.m = re.search('name="m" value="(.*?)"', str(response2)).group(1)
+                        self.shared_from_post_id = re.search('name="shared_from_post_id" value="(\d+)"', str(response2)).group(1)
+                    except (AttributeError):
+                        print(f"                                                      ", end='\r')
+                        time.sleep(1.5)
+                        print(f"[bold bright_white]   ╰─>[bold red] AttributeError...", end='\r')
+                        time.sleep(3.5)
+                        return ("AttributeError")
+                    r.headers.update({
+                        'content-type': 'multipart/form-data; boundary={}'.format(boundary),
+                        'origin': 'https://mbasic.facebook.com',
+                        'referer': 'https://mbasic.facebook.com/composer/mbasic/?{}'.format(self.composer_share),
+                    })
+                    self.xc_message = (''.join(random.choices(string.ascii_uppercase + string.digits, k = random.randrange(5, 10))))
+                    data = MultipartEncoder({
+                        'fb_dtsg': (None, self.fb_dtsg),
+                        'jazoest': (None, self.jazoest),
+                        'target': (None, self.target),
+                        'csid': (None, self.csid),
+                        'c_src': (None, self.c_src),
+                        'referrer': (None, self.referrer),
+                        'ctype': (None, self.ctype),
+                        'cver': (None, self.cver),
+                        'waterfall_source': (None, self.waterfall_source),
+                        'privacyx': (None, self.privacyx),
+                        'appid': (None, self.appid),
+                        'sid': (None, self.sid),
+                        'xc_message': (None, self.xc_message),
+                        'm': (None, self.m),
+                        'shared_from_post_id': (None, self.shared_from_post_id),
+                        'view_post': 'Bagikan',
+                    }, boundary = boundary)
+                    response3 = r.post('https://mbasic.facebook.com/composer/mbasic/?{}'.format(self.share_composer), data = data, cookies = {
+                        'cookie': your_cookies
+                    })
+                    if 'Lampirkan Foto' in str(response3.text) or 'https://mbasic.facebook.com/story.php?story_fbid=' in str(response3.url):
+                        Sukses.append(f'{response3.text}')
+                        if '&eav=' in str(response3.url):
+                            self.share_postingan = (str(response3.url).split('&eav=')[0])
+                        else:
+                            self.share_postingan = (str(response3.url))
+                        print(Panel(f"""[bold white]Status :[italic green] You have successfully shared...[/]
+[bold white]Link :[bold red] {self.share_postingan}""", width=60, style="bold bright_white", title=">>> Sukses <<<"))
+                        return ("Sukses Membagikan Postingan")
+                    elif 'Sepertinya Anda menyalahgunakan fitur ini dengan menggunakannya terlalu cepat. Anda dilarang menggunakan fitur ini untuk sementara.' in str(response3.text):
+                        print(f"                                                      ", end='\r')
+                        time.sleep(1.5)
+                        print(f"[bold bright_white]   ╰─>[bold red] Akun Facebook {user_ids} Terblokir...", end='\r')
+                        time.sleep(3.5)
+                        return ("Terkena Spam")
+                    else:
+                        Gagal.append(f'{response3.text}')
+                        return ("Gagal Membagikan Postingan")
+                else:
+                    print(f"                                                      ", end='\r')
+                    time.sleep(1.5)
+                    print(f"[bold bright_white]   ╰─>[bold red] Tidak Ditemukan Tombol Share Untuk Postingan Tersebut...", end='\r')
+                    time.sleep(3.5)
+                    return ("Tombol Share Tidak Ditemukan")
+
+if __name__ == '__main__':
+    try:
+        if os.path.exists("Data/Subscribe.json") == False:
+            youtube_url = json.loads(requests.get('https://raw.githubusercontent.com/RozhakXD/Sharing/main/Data/Youtube.json').text)['Youtube']
+            os.system(f'xdg-open {youtube_url}')
+            with open('Data/Subscribe.json', 'w') as w:
+                w.write(json.dumps({
+                    "Status": True
+                }))
+            w.close()
+            time.sleep(3.5)
+        os.system('git pull')
+        Main().Cookies()
+    except (Exception) as e:
+        print(Panel(f"[italic red]{str(e).title()}!", width=60, style="bold bright_white", title=">>> Error <<<"))
         exit()
-#+++++++++++++VIVO++++++++++++#
-def vivo():
-    clear()
-    print("[1] MOZILLA WITH FBAN ")
-    print("[2] FBAN ONLY ")
-    print("[3] MOZILLA ONLY ")
-    print("[4] DALVIK WITH FBAN ")
-    print("[5] DOUBLE USER AGENT ")
-    linex()
-    fban = input("CHOOSE AN OPTION: ")
-    if fban == "1":
-        fb.append("1")
-    elif fban == "2":
-        fb.append("2")
-    elif fban == "3":
-        fb.append("3")
-    elif fban == "4":
-    	fb.append("4")
-    else:
-        fb.append("5")
-    linex()
-    num = int(input("HOW MANY UA DO YOU WANT TO GENERATE? "))
-    linex()
-    if "1" in fb:
-        for i in range(num):
-            ua = "Mozilla/5.0 (Linux; Android 6.0.1; vivo 1606 Build/MMB29M;) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 VivoBrowser/"+str(random.randrange(5,11))+"."+str(random.randrange(1,9))+"."+str(random.randrange(1,9))+"."+str(random.randrange(1,9))+"[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/332957647;FBDM/{density=2.0,width=720,height=1406};FBLC/en_PH;FBRV/334763932;FBCR/MTS RUS;FBMF/vivo;FBBD/vivo;FBPN/com.facebook.katana;FBDV/vivo 1906;FBSV/11;FBOP/1;FBCA/arm64-v8a:;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "2" in fb:
-        for i in range(num):
-            ua = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/332957647;FBDM/{density=2.0,width=720,height=1406};FBLC/en_PH;FBRV/334763932;FBCR/MTS RUS;FBMF/vivo;FBBD/vivo;FBPN/com.facebook.katana;FBDV/vivo 1906;FBSV/11;FBOP/1;FBCA/arm64-v8a:;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "3" in fb:
-        for i in range(num):
-            ua1 = "Mozilla/5.0 (Linux; Android 13; 22081212UG Build/TKQ1.220829.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua2 = "Mozilla/5.0 (Linux; Android 9; V1814A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua3 = "Mozilla/5.0 (Linux; Android 10; V1838A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua4 = "Mozilla/5.0 (Linux; Android 5.0.2; vivo X5Pro D Build/LRX21M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua5 = "Mozilla/5.0 (Linux; Android 4.4.4; vivo X5Max) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua6 = "Mozilla/5.0 (Linux; Android 11; V2085A Build/RP1A.200720.012; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua7 = "Mozilla/5.0 (Linux; Android 10; vivo 1935) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua8 = "Mozilla/5.0 (Linux; Android 6.0.1; vivo 1606 Build/MMB29M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua9 = "Mozilla/5.0 (Linux; Android 8.1.0; vivo X20Plus A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua10 = "Mozilla/5.0 (Linux; Android 11; V2149 Build/RP1A.200720.012; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            possible_ua = [ua1, ua2, ua3, ua4, ua5, ua6, ua7, ua8, ua9, ua10] 
-            chosen_ua = random.choice(possible_ua)
-            print(f"FRESH UA {i+1}: {chosen_ua}\n")
-    elif "4" in fb:
-        for i in range(num):
-            ua = "Dalvik/2.1.0 (Linux; U; Android 5.1.1; vivo V3Max Build/LMY47V) [FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_US;FBBV/172917909;FBCR/null;FBMF/vivo;FBBD/vivo;FBDV/vivo V3Max;FBSV/5.1.1;FBCA/armeabi-v7a:armeabi;FBDM/{density=3.0,width=1080,height=1920};FB_FW/1;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "5" in fb:
-        for i in range(num):
-            ua = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_US;FBBV/172917909;FBCR/null;FBMF/vivo;FBBD/vivo;FBDV/vivo V3Max;FBSV/5.1.1;FBCA/armeabi-v7a:armeabi;FBDM/{density=3.0,width=1080,height=1920};FB_FW/1;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    else:
+    except (KeyboardInterrupt):
         exit()
-#++++++++++++++++XIAOMI++++++++++++++#        
-def xiaomi():
-    clear()
-    print("[1] MOZILLA WITH FBAN ")
-    print("[2] FBAN ONLY ")
-    print("[3] MOZILLA ONLY ")
-    print("[4] DALVIK WITH FBAN ")
-    print("[5] DOUBLE USER AGENT ")
-    linex()
-    fban = input("CHOOSE AN OPTION: ")
-    if fban == "1":
-        fb.append("1")
-    elif fban == "2":
-        fb.append("2")
-    elif fban == "3":
-        fb.append("3")
-    elif fban == "4":
-    	fb.append("4")
-    else:
-        fb.append("5")
-    linex()
-    num = int(input("HOW MANY UA DO YOU WANT TO GENERATE? "))
-    linex()
-    if "1" in fb:
-        for i in range(num):
-            ua = "Mozilla/5.0 (Linux; Android 9; XIAOMI Mi Note 10 Pro Build/NMF26F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 AlohaBrowser/"+str(random.randrange(5,11))+"."+str(random.randrange(1,9))+"."+str(random.randrange(1,9))+"."+str(random.randrange(1,9))+"[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/298672707;FBDM/{density=2.75,width=1080,height=2168};FBLC/en_PH;FBRV/299927973;FBCR/MTS RUS;FBMF/Xiaomi;FBBD/Redmi;FBPN/com.facebook.katana;FBDV/Redmi Note 9 Pro;FBSV/10;FBOP/1;FBCA/arm64-v8a:;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "2" in fb:
-        for i in range(num):
-            ua = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/298672707;FBDM/{density=2.75,width=1080,height=2168};FBLC/en_PH;FBRV/299927973;FBCR/MTS RUS;FBMF/Xiaomi;FBBD/Redmi;FBPN/com.facebook.katana;FBDV/Redmi Note 9 Pro;FBSV/10;FBOP/1;FBCA/arm64-v8a:;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "3" in fb:
-        for i in range(num):
-            ua1 = "Mozilla/5.0 (Linux; Android 13; 22081212UG Build/TKQ1.220829.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua2 = "Mozilla/5.0 (Linux; Android 12; 21061119BI) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua3 = "Mozilla/5.0 (Linux; Android 11; 220233L2G Build/RP1A.200720.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua4 = "Mozilla/5.0 (Linux; Android 10; M2004J7BC) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua5 = "Mozilla/5.0 (Linux; Android 13; 23106RN0DA Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua6 = "Mozilla/5.0 (Linux; Android 7.1.2; Redmi 5 Build/N2G47H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua7 = "Mozilla/5.0 (Linux; Android 5.0; SAMSUNG SM-N9002) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/10.2 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua8 = "Mozilla/5.0 (Linux; Android 7.1.2; Redmi 5pro Build/N2G47H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua9 = "Mozilla/5.0 (Linux; Android 8.1; Redmi 6Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua10 = "Mozilla/5.0 (Linux; Android 10; Redmi 8A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            possible_ua = [ua1, ua2, ua3, ua4, ua5, ua6, ua7, ua8, ua9, ua10] 
-            chosen_ua = random.choice(possible_ua)
-            print(f"FRESH UA {i+1}: {chosen_ua}\n")
-    elif "4" in fb:
-        for i in range(num):
-            ua = "Dalvik/2.1.0 (Linux; U; Android 9; Xiaomi Redmi Note 7 Build/PI) [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.katana;FBLC/en_PH;FBBV/285966838;FBCR/Android;FBMF/Genymotion;FBBD/Android;FBDV/Xiaomi Redmi Note 7;FBSV/9;FBCA/x86:null;FBDM/{density=2.625,width=1080,height=2214};FB_FW/1;FBRV/287051585;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "5" in fb:
-        for i in range(num):
-            ua = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/285966838;FBCR/Android;FBMF/Genymotion;FBBD/Android;FBDV/Xiaomi Redmi Note 7;FBSV/9;FBCA/x86:null;FBDM/{density=2.625,width=1080,height=2214};FB_FW/1;FBRV/287051585;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    else:
-        exit()
-#+++++++++++++++SAMSUNG+++++++++++++++#        
-def samsung():
-    clear()
-    print("[1] MOZILLA WITH FBAN ")
-    print("[2] FBAN ONLY ")
-    print("[3] MOZILLA ONLY ")
-    print("[4] DALVIK WITH FBAN ")
-    print("[5] DOUBLE USER AGENT ")
-    linex()
-    fban = input("CHOOSE AN OPTION: ")
-    if fban == "1":
-        fb.append("1")
-    elif fban == "2":
-        fb.append("2")
-    elif fban == "3":
-        fb.append("3")
-    elif fban == "4":
-    	fb.append("4")
-    else:
-        fb.append("5")
-    linex()
-    num = int(input("HOW MANY UA DO YOU WANT TO GENERATE? "))
-    linex()
-    if "1" in fb:
-        for i in range(num):
-            ua = "Mozilla/5.0 (Linux; Android 8.1.0; SAMSUNG SM-N960N) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/"+str(random.randrange(5,11))+" Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/277444756;FBDM/{density=3.0,width=1080,height=1920};FBLC/en_PH;FBRV/279865282;FBCR/Willkommen;FBMF/samsung;FBBD/samsung;FBPN/com.facebook.katana;FBDV/SM-G930F;FBSV/8.0.0;FBOP/19;FBCA/armeabi-v7a:armeabi;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "2" in fb:
-        for i in range(num):
-            ua1 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/samsung;FBBD/samsung;FBPN/com.facebook.katana;FBDV/Samsung A52s;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua2 = "[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix ;FBDV/Samsung A7;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua3 = "[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/samsung;FBBD/samsung;FBDV/SAMSUNG SM-N9810;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua4 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/277444756;FBDM/{density=3.0,width=1080,height=1920};FBLC/en_PH;FBRV/279865282;FBCR/Willkommen;FBMF/samsung;FBBD/samsung;FBPN/com.facebook.katana;FBDV/SM-N985F;FBSV/8.0.0;FBOP/19;FBCA/armeabi-v7a:armeabi;]"
-            ua5 = "[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix;FBDV/SM-N986U1;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua6 = "[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/samsung;FBBD/samsung;FBDV/SAMSUNG SM-N900S;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua7 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/samsung;FBBD/samsung;FBPN/com.facebook.katana;FBDV/SM-N9002;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua8 = "[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/samsung;FBBD/samsung;FBDV/GT-N7105T;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua9 = "[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/samsung;FBBD/samsung;FBDV/Galaxy Note20;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua10 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/samsung;FBBD/samsung;FBPN/com.facebook.katana;FBDV/SM-G5528;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            possible_ua = [ua1, ua2, ua3, ua4, ua5, ua6, ua7, ua8, ua9, ua10] 
-            chosen_ua = random.choice(possible_ua)
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {chosen_ua}\n")
-    elif "3" in fb:
-        for i in range(num):
-            ua1 = "Mozilla/5.0 (Linux; Android 5.0; Samsung A52s) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua2 = "Mozilla/5.0 (Linux; Android 8.1.1; Samsung A7 Build/LMY47X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua3 = "Mozilla/5.0 (Linux; Android 11; SAMSUNG SM-N9810) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/13.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua4 = "Mozilla/5.0 (Linux; Android 11; SM-N985F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua5 = "Mozilla/5.0 (Linux; Android 10; SM-N986U1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua6 = "Mozilla/5.0 (Linux; Android 4.4.2; en-gb; SAMSUNG SM-N900S Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/1.5 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua7 = "Mozilla/5.0 (Linux; Android 5.0; SAMSUNG SM-N9002) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/10.2 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua8 = "Mozilla/5.0 (Linux; Android 4.1.1; GT-N7105T Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua9 = "Mozilla/5.0 (Linux; Android 10; Galaxy Note20 Build/QD4A.200805.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua10 = "Mozilla/5.0 (Linux; Android 6.0.1; SM-G5528 Build/MMB29M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            possible_ua = [ua1, ua2, ua3, ua4, ua5, ua6, ua7, ua8, ua9, ua10] 
-            chosen_ua = random.choice(possible_ua)
-            print(f"FRESH UA {i+1}: {chosen_ua}\n")
-    elif "4" in fb:
-        for i in range(num):
-            ua = "Dalvik/2.1.0 (Linux; U; Android 8.0.0; SM-A720F Build/R16NW) [FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/th_TH;FBBV/135374479;FBCR/AIS;FBMF/samsung;FBBD/samsung;FBDV/SM-A720F;FBSV/8.0.0;FBCA/armeabi-v7a:armeabi;FBDM/{density=3.0,width=1080,height=1920};FB_FW/1;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "5" in fb:
-        for i in range(num):
-            ua1 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/samsung;FBBD/samsung;FBPN/com.facebook.katana;FBDV/Samsung A52s;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua2 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix ;FBDV/Samsung A7;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua3 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/samsung;FBBD/samsung;FBDV/SAMSUNG SM-N9810;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua4 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/277444756;FBDM/{density=3.0,width=1080,height=1920};FBLC/en_PH;FBRV/279865282;FBCR/Willkommen;FBMF/samsung;FBBD/samsung;FBPN/com.facebook.katana;FBDV/SM-N985F;FBSV/8.0.0;FBOP/19;FBCA/armeabi-v7a:armeabi;]"
-            ua5 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix;FBDV/SM-N986U1;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua6 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/samsung;FBBD/samsung;FBDV/SAMSUNG SM-N900S;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua7 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/samsung;FBBD/samsung;FBPN/com.facebook.katana;FBDV/SM-N9002;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua8 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/samsung;FBBD/samsung;FBDV/GT-N7105T;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua9 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/samsung;FBBD/samsung;FBDV/Galaxy Note20;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua10 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/samsung;FBBD/samsung;FBPN/com.facebook.katana;FBDV/SM-G5528;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            possible_ua = [ua1, ua2, ua3, ua4, ua5, ua6, ua7, ua8, ua9, ua10] 
-            chosen_ua = random.choice(possible_ua)
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {chosen_ua}\n")
-    else:
-        exit()
-#+++++++++++++++OPPO++++++++++++++#        
-def oppo():
-    clear()
-    print("[1] MOZILLA WITH FBAN ")
-    print("[2] FBAN ONLY ")
-    print("[3] MOZILLA ONLY ")
-    print("[4] DALVIK WITH FBAN ")
-    print("[5] DOUBLE USER AGENT ")
-    linex()
-    fban = input("CHOOSE AN OPTION: ")
-    if fban == "1":
-        fb.append("1")
-    elif fban == "2":
-        fb.append("2")
-    elif fban == "3":
-        fb.append("3")
-    elif fban == "4":
-    	fb.append("4")
-    else:
-        fb.append("5")
-    linex()
-    num = int(input("HOW MANY UA DO YOU WANT TO GENERATE? "))
-    linex()
-    if "1" in fb:
-        for i in range(num):
-            ua = "Mozilla/5.0 (Linux; U; Android 7.1.1; en-us; CPH1801 Build/NMF26F) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 OppoBrowser/"+str(random.randrange(5,11))+"."+str(random.randrange(1,9))+"."+str(random.randrange(1,9))+"."+str(random.randrange(1,9))+" [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/233235247;FBDM/{density=3.0,width=1080,height=2132};FBLC/en_PH;FBRV/235412020;FBCR/airtel;FBMF/OPPO;FBBD/OPPO;FBPN/com.facebook.katana;FBDV/CPH1893;FBSV/9;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "2" in fb:
-        for i in range(num):
-            ua = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/233235247;FBDM/{density=3.0,width=1080,height=2132};FBLC/en_PH;FBRV/235412020;FBCR/airtel;FBMF/OPPO;FBBD/OPPO;FBPN/com.facebook.katana;FBDV/CPH1893;FBSV/9;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "3" in fb:
-        for i in range(num):
-            ua1 = "Mozilla/5.0 (Linux; Android 10; CPH2107) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua2 = "Mozilla/5.0 (Linux; Android 13; PHQ110 Build/RKQ1.211119.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua3 = "Mozilla/5.0 (Linux; Android 11; CPH2271 Build/RP1A.200720.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua4 = "Mozilla/5.0 (Linux; Android 5.1.1; OPPO A33m Build/LMY47V; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua5 = "Mozilla/5.0 (Linux; Android 10; CPH2025) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua6 = "Mozilla/5.0 (Linux; Android 7.1.1; CPH1717 Build/N4F26M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua7 = "Mozilla/5.0 (Linux; Android 7.1.1; OPPO A77) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua8 = "Mozilla/5.0 (Linux; Android 9; PBBM00 Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua9 = "Mozilla/5.0 (Linux; Android 11; CPH2059) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua10 = "Mozilla/5.0 (Linux; Android 8.1.0; CPH1851) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            possible_ua = [ua1, ua2, ua3, ua4, ua5, ua6, ua7, ua8, ua9, ua10] 
-            chosen_ua = random.choice(possible_ua)
-            print(f"FRESH UA {i+1}: {chosen_ua}\n")
-    elif "4" in fb:
-        for i in range(num):
-            ua = "Dalvik/2.1.0 (Linux; U; Android 8.1.0; CPH1909 Build/O11019) [FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/182747440;FBCR/TRUE-H;FBMF/OPPO;FBBD/OPPO;FBDV/CPH1909;FBSV/8.1.0;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=1424,height=720};FB_FW/1;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "5" in fb:
-        for i in range(num):
-            ua = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/182747440;FBCR/TRUE-H;FBMF/OPPO;FBBD/OPPO;FBDV/CPH1909;FBSV/8.1.0;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=1424,height=720};FB_FW/1;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    else:
-        exit()
-#+++++++++++++++TECNO+++++++++++++#        
-def tecno():
-    clear()
-    print("[1] MOZILLA WITH FBAN ")
-    print("[2] FBAN ONLY ")
-    print("[3] MOZILLA ONLY ")
-    linex()
-    fban = input("CHOOSE AN OPTION: ")
-    if fban == "1":
-        fb.append("1")
-    elif fban == "2":
-        fb.append("2")
-    else:
-        fb.append("3")
-    linex()
-    num = int(input("HOW MANY UA DO YOU WANT TO GENERATE? "))
-    linex()
-    if "1" in fb:
-        for i in range(num):
-            ua = "Mozilla/5.0 (Linux; Android 10; TECNO KC8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30034644;FBDM/{density=1.5,width=480,height=854};FBLC/en_PH;FBCR/Etisalat NG;FBMF/TECNO;FBBD/TECNO;FBPN/com.facebook.katana;FBDV/TECNO-W3;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "2" in fb:
-        for i in range(num):
-            ua = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30034644;FBDM/{density=1.5,width=480,height=854};FBLC/en_PH;FBCR/Etisalat NG;FBMF/TECNO;FBBD/TECNO;FBPN/com.facebook.katana;FBDV/TECNO-W3;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    for i in range(num):
-            ua1 = "Mozilla/5.0 (Linux; Android 7.1; Tecno A602) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua2 = "Mozilla/5.0 (Linux; Android 9; TECNO AB7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua3 = "Mozilla/5.0 (Linux; Android 12; TECNO AD9 Build/SP1A.210812.016; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua4 = "Mozilla/5.0 (Linux; Android 8.1.0; TECNO BA2 Build/O11019) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua5 = "Mozilla/5.0 (Linux; Android 5.0.2; TECNO-C8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua6 = "Mozilla/5.0 (Linux; Android 9; TECNO CC9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua7 = "Mozilla/5.0 (Linux; Android 11; TECNO CH6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua8 = "Mozilla/5.0 (Linux; Android 13; TECNO CK7n Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua9 = "Mozilla/5.0 (Linux; Android 7.0; TECNO CX Air) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua10 = "Mozilla/5.0 (Linux; Android 8.1.0; TECNO ID3k) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            possible_ua = [ua1, ua2, ua3, ua4, ua5, ua6, ua7, ua8, ua9, ua10] 
-            chosen_ua = random.choice(possible_ua)
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {chosen_ua}\n")
-    else:
-        exit()
-#+++++++++++++++INFINIX+++++++++++++#        
-def infinix():
-    clear()
-    print("[1] MOZILLA WITH FBAN ")
-    print("[2] FBAN ONLY ")
-    print("[3] MOZILLA ONLY ")
-    print("[4] DALVIK WITH FBAN ")
-    print("[5] DOUBLE USER AGENT ")
-    linex()
-    fban = input("CHOOSE AN OPTION: ")
-    if fban == "1":
-        fb.append("1")
-    elif fban == "2":
-        fb.append("2")
-    elif fban == "3":
-        fb.append("3")
-    elif fban == "4":
-    	fb.append("4")
-    else:
-        fb.append("5")
-    linex()
-    num = int(input("HOW MANY UA DO YOU WANT TO GENERATE? "))
-    linex()
-    if "1" in fb:
-        for i in range(num):
-            ua1 = "Mozilla/5.0 (Linux; Android 8.1.0; Infinix X606B Build/O11019) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/Infinix;FBBD/Infinix;FBPN/com.facebook.katana;FBDV/Infinix X606B;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua2 = "Mozilla/5.0 (Linux; Android 7.0; Infinix X559 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix;FBDV/Infinix X559;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua3 = "Mozilla/5.0 (Linux; Android 11; Infinix X698) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/INFINIX MOBILTY LIMITED;FBBD/Infinix;FBDV/Infinix X698;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua4 = "Mozilla/5.0 (Linux; Android 12; Infinix X671 Build/SP1A.210812.016; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";] [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/Infinix;FBBD/Infinix;FBPN/com.facebook.katana;FBDV/Infinix X671;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua5 = "Mozilla/5.0 (Linux; Android 12; Infinix X6820) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix;FBDV/Infinix X6820;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua6 = "Mozilla/5.0 (Linux; Android 11; Infinix X6811) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/INFINIX MOBILTY LIMITED;FBBD/Infinix ;FBDV/Infinix X6811;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua7 = "Mozilla/5.0 (Linux; Android 11; Infinix X6810) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/Infinix;FBBD/Infinix;FBPN/com.facebook.katana;FBDV/Infinix X6810;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua8 = "Mozilla/5.0 (Linux; Android 8.1.0; Infinix X620) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix;FBDV/Infinix X620;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua9 = "Mozilla/5.0 (Linux; Android 11; Infinix X663D) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/INFINIX MOBILTY LIMITED;FBBD/Infinix;FBDV/Infinix X663D;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua10 = "Mozilla/5.0 (Linux; Android 5.1; Infinix X506) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/Infinix;FBBD/Infinix;FBPN/com.facebook.katana;FBDV/Infinix X506;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            possible_ua = [ua1, ua2, ua3, ua4, ua5, ua6, ua7, ua8, ua9, ua10] 
-            chosen_ua = random.choice(possible_ua)
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {chosen_ua}\n")
-    elif "2" in fb:
-        for i in range(num):
-            ua1 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/Infinix;FBBD/Infinix;FBPN/com.facebook.katana;FBDV/Infinix X606B;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua2 = "[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix;FBDV/Infinix X559;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua3 = "[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/INFINIX MOBILTY LIMITED;FBBD/Infinix;FBDV/Infinix X698;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua4 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/Infinix;FBBD/Infinix;FBPN/com.facebook.katana;FBDV/Infinix X671;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua5 = "[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix;FBDV/Infinix X6820;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua6 = "[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/INFINIX MOBILTY LIMITED;FBBD/Infinix ;FBDV/Infinix X6811;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua7 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/Infinix;FBBD/Infinix;FBPN/com.facebook.katana;FBDV/Infinix X6810;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua8 = "[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix;FBDV/Infinix X620;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua9 = "[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/INFINIX MOBILTY LIMITED;FBBD/Infinix;FBDV/Infinix X663D;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua10 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/Infinix;FBBD/Infinix;FBPN/com.facebook.katana;FBDV/Infinix X506;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            possible_ua = [ua1, ua2, ua3, ua4, ua5, ua6, ua7, ua8, ua9, ua10] 
-            chosen_ua = random.choice(possible_ua)
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {chosen_ua}\n")
-    elif "3" in fb:
-        for i in range(num):
-            ua1 = "Mozilla/5.0 (Linux; Android 8.1.0; Infinix X606B Build/O11019) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua2 = "Mozilla/5.0 (Linux; Android 7.0; Infinix X559 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua3 = "Mozilla/5.0 (Linux; Android 11; Infinix X698) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua4 = "Mozilla/5.0 (Linux; Android 12; Infinix X671 Build/SP1A.210812.016; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";]"
-            ua5 = "Mozilla/5.0 (Linux; Android 12; Infinix X6820) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua6 = "Mozilla/5.0 (Linux; Android 11; Infinix X6811) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua7 = "Mozilla/5.0 (Linux; Android 11; Infinix X6810) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua8 = "Mozilla/5.0 (Linux; Android 8.1.0; Infinix X620) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua9 = "Mozilla/5.0 (Linux; Android 11; Infinix X663D) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            ua10 = "Mozilla/5.0 (Linux; Android 5.1; Infinix X506) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+str(random.randrange(73,117))+".0."+str(random.randrange(3000,5800))+"."+str(random.randrange(40,150))+" Mobile Safari/537.36"
-            possible_ua = [ua1, ua2, ua3, ua4, ua5, ua6, ua7, ua8, ua9, ua10] 
-            chosen_ua = random.choice(possible_ua)
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {chosen_ua}\n")
-    elif "4" in fb:
-        for i in range(num):
-            ua = "Dalvik/2.1.0 (Linux; U; Android 10; Infinix X688B Build/QP1A.190711.020) [FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/INFINIX MOBILITY LIMITED;FBBD/Infinix;FBDV/Infinix X688B;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {ua}\n")
-    elif "5" in fb:
-        for i in range(num):
-            ua1 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/Infinix;FBBD/Infinix;FBPN/com.facebook.katana;FBDV/Infinix X606B;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua2 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix;FBDV/Infinix X559;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua3 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/INFINIX MOBILTY LIMITED;FBBD/Infinix;FBDV/Infinix X698;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua4 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/Infinix;FBBD/Infinix;FBPN/com.facebook.katana;FBDV/Infinix X671;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua5 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix;FBDV/Infinix X6820;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua6 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/INFINIX MOBILTY LIMITED;FBBD/Infinix ;FBDV/Infinix X6811;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua7 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/Infinix;FBBD/Infinix;FBPN/com.facebook.katana;FBDV/Infinix X6810;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            ua8 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/Orca-Android;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.orca;FBLC/en_PH;FBBV/396116327;FBCR/TNT;FBMF/Infinix;FBBD/Infinix;FBDV/Infinix X620;FBSV/12;FBCA/armeabi-v7a:armeabi;FBDM/{density=2.0,width=720,height=1444};FB_FW/1;]"
-            ua9 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/MessengerLite;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBPN/com.facebook.mlite;FBLC/en_PH;FBBV/346850586;FBCR/TNT;FBMF/INFINIX MOBILTY LIMITED;FBBD/Infinix;FBDV/Infinix X663D;FBSV/10;FBCA/arm64-v8a:null;FBDM/{density=2.0,width=720,height=1472};]"
-            ua10 = "[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";[FBAN/FB4A;FBAV/"+str(random.randrange(70,400))+".0.0."+str(random.randrange(10,77))+"."+str(random.randrange(40,200))+";FBBV/30529816;FBDM/{density=2.0,width=720,height=1280};FBLC/en_PH;FBCR/MTN NG;FBMF/Infinix;FBBD/Infinix;FBPN/com.facebook.katana;FBDV/Infinix X506;FBSV/6.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
-            possible_ua = [ua1, ua2, ua3, ua4, ua5, ua6, ua7, ua8, ua9, ua10] 
-            chosen_ua = random.choice(possible_ua)
-            sp(0.5)
-            print(f"FRESH UA {i+1}: {chosen_ua}\n")
-    else:
-        exit()
-#end
-main()
