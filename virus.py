@@ -353,7 +353,7 @@ def update_user_agent():
     linex()
     os.system("clear")
     print(logo)
-    print('                      UPDATE TOOL ')
+    print('                          UPDATE TOOL ')
     linex()
     user_agent = input(' INPUT USER AGENT : ')
     print(' UPDATING USER AGENT... PLEASE WAIT ')
