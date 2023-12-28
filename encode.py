@@ -321,9 +321,12 @@ def yuji_update():
     time.sleep(3)
 
 def get_user_agent():
+    os.system("clear")
     print(logo)
     return input(" INPUT USER AGENT: ")
 if __name__ == "__main__":
+    print(" SUCCESSFULLY UPDATE ")
+    time.sleep(3)
     yuji_update()
     user_agent = get_user_agent()
 	
