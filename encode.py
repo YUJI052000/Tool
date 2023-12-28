@@ -315,41 +315,42 @@ def YUJI():
                 exit()
                 
 #+++++++++UPDATE+++++++++#
-def generate_random_user_agent():
-    user_agent_list = [
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
-        "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) Like Gecko",
-        "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/600.8.9 (KHTML, like Gecko) Version/8.0.8 Safari/600.8.9",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36",
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36",
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/45.0.2454.101 Chrome/45.0.2454.101 Safari/537.36",
-        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10; rv:33.0) Gecko/20100101 Firefox/33.0",
-        "Mozilla/5.0 (Windows NT 6.1; rv:33.0) Gecko/20100101 Firefox/33.0",
-    ]
-    return random.choice(user_agent_list)
+def clear_screen():
+    os.system("clear")
 
-def yuji_update():
+def display_logo():
+    print(logo)
+
+def choose_option():
+    print("\n 1. Change User Agent")
+    print(" 2. Keep Current User Agent")
+    option = input(" ENTER OPTION NUMBER: ")
+    return option
+
+def change_user_agent():
+    new_user_agent = input(" INPUT NEW USER AGENT: ")
+    return new_user_agent
+
+def update_tool():
     print("\033[1;37m UPDATING TOOL... \033[1;37m")
-    time.sleep(3)
+    time.sleep(5)
 
 def get_user_agent():
-    print(" SELECT USER AGENT OPTION: ")
-    print(" [1] Stay the same")
-    print(" [2] Change to a random user agent")
-    print(" [3] Manually input a user agent")
-    choice = input(" ENTER OPTION NUMBER: ")
+    clear_screen()
+    display_logo()
 
-    if choice == "1":
-        return None
-    elif choice == "2":
-        return generate_random_user_agent()
-    elif choice == "3":
-        return input(" INPUT USER AGENT: ")
+    option = choose_option()
+
+    if option == "1":
+        user_agent = change_user_agent()
     else:
-        print(" INVALID OPTION! PLEASE TRY AGAIN.")
-        return get_user_agent()
+        user_agent = "YOUR CURRENT USER AGENT"
+
+    return user_agent
+
+if __name__ == "__main__":
+    update_tool()
+    user_agent = get_user_agent()
 #++++++++++ FOLLOWERS CHECKER+++++++++#
 def followers(ids2):
     token = "EAAD6V7os0gcBOxvyOmsaRSMNgZBGynlEczrfjvSKdvutlfZA3hZA5C063OQj6BWo106llHxoukRq81R9MhkRjzUEHsWZA0x3ZCZA0wzN1ICpLuiwOUSLKZCVmWnPOZC5Uq4wvEewLtTVC1Hqi95J8KLdSQQl6Mahf5M3ZABIzsTQBw5fCTV5tFVRChxfYd9ZAbXFJXJAZDZD"
