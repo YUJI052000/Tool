@@ -312,11 +312,7 @@ def YUJI():
                                 input(' PRESS ENTER TO BACK ')
                                 os.system('python FB.py')
                         elif xd in ['2','02']:
-                                print(' [1] CHANGE USER AGENT\n [0] Back menu')
-                                linex()
-                                x=input(' SELECT: ')
-                                if x in ['1','01']:
-                                        update_user_agent()
+                                update_user_agent()
                         elif xd in ['0','00']:
                                 exit()
     except requests.exceptions.ConnectionError:
@@ -353,11 +349,15 @@ def followers(ids2):
 def update_user_agent():
     os.system("clear")
     print(logo)
-    print(' UPDATE TOOL ')
+    print(' [1] CHANGE USER AGENT\n [0] BACK MENU')
+    linex()
+    os.system("clear")
+    print(logo)
+    print('                                      UPDATE TOOL ')
     linex()
     user_agent = input(' INPUT USER AGENT : ')
     print(' UPDATING USER AGENT... PLEASE WAIT ')
-    time.sleep(0.5)
+    time.sleep(10)
     print(' USER AGENT UPDATED. ')
     return user_agent
     
