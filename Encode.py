@@ -101,8 +101,8 @@ user_agent9 = f"[FBAN/FB4A;FBAV/"+str(random.randint(199,399))+".0.0."+str(rando
 
 user_agent10 = f"[FBAN/FB4A;FBAV/"+str(random.randint(199,399))+".0.0."+str(random.randint(1,9))+"."+str(random.randint(99,199))+";FBBV/"+str(random.randint(111111111,999999999))+";FBDM/{density="+str(random.randint(2,3))+"."+str(random.randint(0,5))+",width=1080,height="+str(random.randint(1400,1499))+"};FBLC/en_US;FBRV/"+str(random.randint(199,399))+".0.0."+str(random.randint(1,9))+"."+str(random.randint(99,199))+";FBCR/"+fbcr10+";FBMF/"+fbmf10+";FBBD/"+fbmf10+";FBPN/com.facebook.katana;FBDV/"+fbdv10+";FBSV/"+str(random.randint(9,12))+";FBOP/1;FBCA/arm64-v8a:]"
 
-print(color1+"\n"+user_agent1+"','"+user_agent2+"'"+user_agent3+"','"+user_agent4+"'"+user_agent5+"','"+user_agent6+"'"+user_agent7+"','"+user_agent8+"'"+user_agent9+"','"+user_agent10+"'")
+print(color1+"\n"+user_agent1+"','"+user_agent2+"','"+user_agent3+"','"+user_agent4+"','"+user_agent5+"','"+user_agent6+"','"+user_agent7+"','"+user_agent8+"','"+user_agent9+"','"+user_agent10+"','")
 
 print()
 
-print(color2+"\n"+user_agent1+"','"+user_agent2+"'"+user_agent3+"','"+user_agent4+"'"+user_agent5+"','"+user_agent6+"'"+user_agent7+"','"+user_agent8+"'"+user_agent9+"','"+user_agent10+"'")
+#print(color2+"\n"+user_agent1+"','"+user_agent2+"'"+user_agent3+"','"+user_agent4+"'"+user_agent5+"','"+user_agent6+"'"+user_agent7+"','"+user_agent8+"'"+user_agent9+"','"+user_agent10+"'")
