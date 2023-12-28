@@ -12,7 +12,7 @@ from os import system as sm
 from sys import platform as pf
 from time import sleep as sp
 
-print(" WELCOME TO GREIGOR'S USER AGENT GENERATOR ")
+print(" \033[1;33mWELCOME TO GREIGOR'S USER AGENT GENERATOR ")
 sp(1.5)
 
 
