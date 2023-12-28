@@ -312,7 +312,7 @@ def YUJI():
                                 input(' PRESS ENTER TO BACK ')
                                 os.system('python FB.py')
                         elif xd in ['2','02']:
-                        	    os.system('clear')
+                        	os.system('clear')
                                 print(' UPDATE TOOL ')
                                 agent = input(" INPUT USER AGENT : ")
                                 user_agent = agent.split()[0]
