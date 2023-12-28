@@ -319,7 +319,6 @@ def yuji_update():
     print("\033[1;32m Updating Tool... \033[1;37m")
     os.system("git pull")
     print("\033[1;32m Tool Updated Successfully! \033[1;37m")
-    os.system("python danger.py")
 
 def read_user_agent():
     with open("greigor_agents.txt", "r") as file:
