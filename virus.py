@@ -313,6 +313,7 @@ def YUJI():
                                 os.system('python FB.py')
                         elif xd in ['2','02']:
                                 os.system("clear")
+				print(logo)
                                 print(' [1] CHANGE USER AGENT\n [0] Back menu')
                                 linex()
                                 x=input(' SELECT: ')
@@ -355,7 +356,6 @@ def update_user_agent():
     os.system("clear")
     print(logo)
     print(' UPDATE TOOL ')
-    print(' INPUT YOUR USER AGENT: ')
     linex()
     user_agent = input(' INPUT USER AGENT : ')
     return user_agent
