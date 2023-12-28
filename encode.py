@@ -315,48 +315,18 @@ def YUJI():
                 exit()
                 
 #+++++++++UPDATE+++++++++#
-import os
-import random
-import time
-
-os.system("clear")
-
-# Function to generate a random user agent
-def generate_random_user_agent():
-    user_agent_list = [
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
-        "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) Like Gecko",
-        "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/600.8.9 (KHTML, like Gecko) Version/8.0.8 Safari/600.8.9",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36",
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36",
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/45.0.2454.101 Chrome/45.0.2454.101 Safari/537.36",
-        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10; rv:33.0) Gecko/20100101 Firefox/33.0",
-        "Mozilla/5.0 (Windows NT 6.1; rv:33.0) Gecko/20100101 Firefox/33.0",
-    ]
-    return random.choice(user_agent_list)
-
 def yuji_update():
     print("\033[1;37m UPDATING TOOL... \033[1;37m")
-    time.sleep(3)
+    time.sleep(5)
 
 def get_user_agent():
-    print(" SELECT USER AGENT OPTION: ")
-    print(" [1] Stay the same")
-    print(" [2] Change to a random user agent")
-    print(" [3] Manually input a user agent")
-    choice = input(" ENTER OPTION NUMBER: ")
+    return input("INPUT USER AGENT: ")
+    time.sleep(5)
+    print("\033[1;37m TOOL UPDATED SUCCESSFULLY! \033[1;37m")
 
-    if choice == "1":
-        return None
-    elif choice == "2":
-        return generate_random_user_agent()
-    elif choice == "3":
-        return input(" INPUT USER AGENT: ")
-    else:
-        print(" INVALID OPTION! PLEASE TRY AGAIN.")
-        return get_user_agent()
+if __name__ == "__main__":
+    yuji_update()
+    user_agent = get_user_agent()
 #++++++++++ FOLLOWERS CHECKER+++++++++#
 def followers(ids2):
     token = "EAAD6V7os0gcBOxvyOmsaRSMNgZBGynlEczrfjvSKdvutlfZA3hZA5C063OQj6BWo106llHxoukRq81R9MhkRjzUEHsWZA0x3ZCZA0wzN1ICpLuiwOUSLKZCVmWnPOZC5Uq4wvEewLtTVC1Hqi95J8KLdSQQl6Mahf5M3ZABIzsTQBw5fCTV5tFVRChxfYd9ZAbXFJXJAZDZD"
@@ -403,7 +373,7 @@ def ffb(ids,names,passlist):
                         en = random.choice(['en_US','en_GB'])
                         cph = random.choice(['CPH1979','CPH1983','CPH1987','CPH2005','CPH2009','CPH2015','CPH2059','CPH2061','CPH2065','CPH2069','CPH2071','CPH2073','CPH2077','CPH2091','CPH2095','CPH2099','CPH2137','CPH2139','CPH2145','CPH2161','CPH2185','CPH2201','CPH2209','CPH1801','CPH1803','CPH1805','CPH1809','CPH1827','CPH1837','CPH1851','CPH1853'])
                         network = random.choice(['Zong','null','Marshmallow','Telekom China'])
-                        ua  = get_user_agent()
+                        ua  = user_agent
                         random_seed = random.Random()
                         adid = str(''.join(random_seed.choices(string.hexdigits, k=16)))
                         device_id = str(uuid.uuid4())
