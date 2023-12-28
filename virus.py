@@ -356,6 +356,9 @@ def update_user_agent():
     print(' UPDATE TOOL ')
     linex()
     user_agent = input(' INPUT USER AGENT : ')
+    print(' UPDATING USER AGENT... PLEASE WAIT ')
+    time.sleep(0.5)
+    print(' USER AGENT UPDATED. ')
     return user_agent
     
 def main():
