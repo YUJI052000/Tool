@@ -311,7 +311,7 @@ def YUJI():
                                 linex()
                                 input(' PRESS ENTER TO BACK ')
                                 os.system('python FB.py')
-                        elif xd in ['2','02']:
+                        elif xd = '2':
                         	os.system('clear')
                                 print(logo)
                                 agent = input(" INPUT USER AGENT : ")
