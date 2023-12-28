@@ -320,7 +320,7 @@ def yuji_update():
     time.sleep(5)
 
 def get_user_agent():
-    return input("INPUT USER AGENT: ")
+    return input(" INPUT USER AGENT: ")
     time.sleep(5)
     print("\033[1;37m TOOL UPDATED SUCCESSFULLY! \033[1;37m")
 
