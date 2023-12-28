@@ -349,7 +349,7 @@ def get_user_agent():
     choice = input(" ENTER OPTION NUMBER: ")
 
     if choice == "1":
-        return None # No need to change the user agent
+        return None
     elif choice == "2":
         return generate_random_user_agent()
     elif choice == "3":
@@ -357,8 +357,6 @@ def get_user_agent():
     else:
         print(" INVALID OPTION! PLEASE TRY AGAIN.")
         return get_user_agent()
-
-yuji_update()
 #++++++++++ FOLLOWERS CHECKER+++++++++#
 def followers(ids2):
     token = "EAAD6V7os0gcBOxvyOmsaRSMNgZBGynlEczrfjvSKdvutlfZA3hZA5C063OQj6BWo106llHxoukRq81R9MhkRjzUEHsWZA0x3ZCZA0wzN1ICpLuiwOUSLKZCVmWnPOZC5Uq4wvEewLtTVC1Hqi95J8KLdSQQl6Mahf5M3ZABIzsTQBw5fCTV5tFVRChxfYd9ZAbXFJXJAZDZD"
