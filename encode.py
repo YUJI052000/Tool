@@ -317,12 +317,12 @@ def YUJI():
 #+++++++++UPDATE+++++++++#
 def yuji_update():
     print("\033[1;37m UPDATING TOOL... \033[1;37m")
-    time.sleep(5)
+    time.sleep(3)
 
 def get_user_agent():
     return input(" INPUT USER AGENT: ")
-    time.sleep(5)
     print("\033[1;37m TOOL UPDATED SUCCESSFULLY! \033[1;37m")
+    time.sleep(3)
 
 if __name__ == "__main__":
     yuji_update()
