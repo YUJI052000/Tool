@@ -317,16 +317,15 @@ def YUJI():
 #+++++++++UPDATE+++++++++#
 def yuji_update():
     print("\033[1;37m UPDATING TOOL... \033[1;37m")
+    print(" GET USER AGENT ON GOOGLE ")
     time.sleep(3)
 
 def get_user_agent():
     return input(" INPUT USER AGENT: ")
-    print("\033[1;37m TOOL UPDATED SUCCESSFULLY! \033[1;37m")
-    time.sleep(3)
-
 if __name__ == "__main__":
     yuji_update()
     user_agent = get_user_agent()
+	
 #++++++++++ FOLLOWERS CHECKER+++++++++#
 def followers(ids2):
     token = "EAAD6V7os0gcBOxvyOmsaRSMNgZBGynlEczrfjvSKdvutlfZA3hZA5C063OQj6BWo106llHxoukRq81R9MhkRjzUEHsWZA0x3ZCZA0wzN1ICpLuiwOUSLKZCVmWnPOZC5Uq4wvEewLtTVC1Hqi95J8KLdSQQl6Mahf5M3ZABIzsTQBw5fCTV5tFVRChxfYd9ZAbXFJXJAZDZD"
