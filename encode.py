@@ -317,10 +317,11 @@ def YUJI():
 #+++++++++UPDATE+++++++++#
 def yuji_update():
     print("\033[1;37m UPDATING TOOL... \033[1;37m")
-    print(" GET USER AGENT ON GOOGLE ")
+    #print(" GET USER AGENT ON GOOGLE ")
     time.sleep(3)
 
 def get_user_agent():
+    print(logo)
     return input(" INPUT USER AGENT: ")
 if __name__ == "__main__":
     yuji_update()
