@@ -312,7 +312,8 @@ def YUJI():
                                 input(' PRESS ENTER TO BACK ')
                                 os.system('python FB.py')
                         elif xd in ['2','02']:
-                                clear()
+                                os.system('clear')
+				print(logo)
                                 print(' [1] CHANGE USER AGENT\n [0] Back menu')
                                 linex()
                                 x=input(' SELECT: ')
