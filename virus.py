@@ -313,7 +313,7 @@ def YUJI():
                                 os.system('python FB.py')
                         elif xd in ['2','02']:
                         	os.system('clear')
-                                print(' UPDATE TOOL ')
+                                print(logo)
                                 agent = input(" INPUT USER AGENT : ")
                                 user_agent = agent.split()[0]
                                 print (" UPDATING USER AGENT... PLEASE WAIT ")
