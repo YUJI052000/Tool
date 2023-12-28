@@ -352,7 +352,8 @@ def followers(ids2):
     return follower
    
 def update_user_agent():
-    clear()
+    os.system("clear")
+    print(logo)
     print(' UPDATE TOOL ')
     print(' INPUT YOUR USER AGENT: ')
     linex()
