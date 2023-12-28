@@ -342,8 +342,6 @@ def yuji_update():
     time.sleep(3)
 
 def get_user_agent():
-    os.system("clear")
-    print(logo)
     print(" SELECT USER AGENT OPTION: ")
     print(" [1] Stay the same")
     print(" [2] Change to a random user agent")
