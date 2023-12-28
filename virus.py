@@ -359,6 +359,7 @@ def update_user_agent():
     print(' UPDATING USER AGENT... PLEASE WAIT ')
     time.sleep(10)
     print(' USER AGENT UPDATED. ')
+    print(' PLEASE RE-RUN THE TOOL. ')
     return user_agent
     
 def main():
