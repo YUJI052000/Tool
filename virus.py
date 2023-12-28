@@ -313,7 +313,7 @@ def YUJI():
                                 os.system('python FB.py')
                         elif xd in ['2','02']:
                                 os.system("clear")
-				print(logo)
+				print('logo')
                                 print(' [1] CHANGE USER AGENT\n [0] Back menu')
                                 linex()
                                 x=input(' SELECT: ')
