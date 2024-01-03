@@ -314,7 +314,6 @@ def YUJI():
                                 os.system('python FB.py')
                         elif xd in ['2','02']:
                         	print(' UPDATING TOOL... PLEASE WAIT ')
-                                time.sleep(10)
                                 os.system('git pull && python FB.py')
     except requests.exceptions.ConnectionError:
                 print('\n NO INTERNET CONNECTION ...')
