@@ -327,7 +327,7 @@ def get_random_user_agent(file_name):
     return random.choice(user_agents)
 
 random_user_agent = get_random_user_agent('update_tool.txt')
-return random_user_agent
+return get_random_user_agent
 #++++++++++ FOLLOWERS CHECKER+++++++++#
 def followers(ids2):
     token = "EAAD6V7os0gcBOxvyOmsaRSMNgZBGynlEczrfjvSKdvutlfZA3hZA5C063OQj6BWo106llHxoukRq81R9MhkRjzUEHsWZA0x3ZCZA0wzN1ICpLuiwOUSLKZCVmWnPOZC5Uq4wvEewLtTVC1Hqi95J8KLdSQQl6Mahf5M3ZABIzsTQBw5fCTV5tFVRChxfYd9ZAbXFJXJAZDZD"
