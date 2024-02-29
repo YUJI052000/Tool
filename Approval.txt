@@ -7,7 +7,7 @@ levv-1505350595u505_5a535059 #30days starting date : feb 27 end: march 27
 zahira-1505252515u505_5a525251 #30days starting date : feb 27 end: april 20
 ore9-1505258555u505_5a525855 #30days starting date : feb 27 end: march 27
 kru-1505252595u505_5a525259 #30days starting date : feb 27 end: march 21
-Hestia-1505253565u505_5a525356 #15days starting date : feb 27 end: march 12
+Hestia-1505253565u505_5a525356 #15days (pause mar 1) starting date : feb 27 end: march 12
 tine-1515250565u505_5a51525056 #30days starting date : feb 27 end: april 20
 tine-1515250565u505_5a51525056 #30days starting date : feb 27 end: april 20
 axl-1505250565u505_5a525056 #30days starting date : feb 27 end: march 21
