@@ -25,4 +25,5 @@ lio-1505250575u505_5a525057 #30days starting date : feb 27 end: march 21
 Ehradel-1505352515u505_5a535251 #15days starting date : feb 27 end: march 12
 avah-1505159545u505_5a515954 #9days starting date : feb 29 end : march 9
 Elton-1505550515u505_5a555051
-kiel-1505252545u505_5a525254
+kiel-1505252545u505_5a525254 #4 days march 1 end march 5
+Kean-1505753515u505_5a575351 #15 days march 2 end: march 17
