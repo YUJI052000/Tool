@@ -15,18 +15,12 @@ tine-1515250565u505_5a51525056 #30days starting date : feb 27 end: april 20
 axl-1505250565u505_5a525056 #30days starting date : feb 27 end: march 21
 Potato-1505259535u505_5a525953 #30days starting date : feb 27 end: march 21
 eiff-1505253585u505_5a525358 #30days starting date : feb 27 end: march 21
-simon-1505154565u505_5a515456 #15days starting date : feb 27 end: march 12
 sekimabaho-1505450565u505_5a545056 #15days starting date : feb 27 end: march 27
-#rk-1505156515u505_5a515651 #15days stop starting date : feb 27 end: march 12
-lio-1505350565u505_5a535056 #30days starting date : feb 27 end: march 12
 axl-1505153535u505_5a515353 #30days starting date : feb 27 end: march 21
 perseus-1505255595u505_5a525559 #30days starting date : feb 27 end: march 21
-sif-1505153575u505_5a515357 #15days starting date : feb 27 end: march 12
 lio-1505250575u505_5a525057 #30days starting date : feb 27 end: march 21
-Ehradel-1505352515u505_5a535251 #15days starting date : feb 27 end: march 12
 avah-1505159545u505_5a515954 #9days starting date : feb 29 end : march 9
 Elton-1505550515u505_5a555051
 Kean-1505753515u505_5a575351 #15 days march 2 end: march 17
 Yshee-1505255585u505_5a525558 #march 7 15 days
-OREO-1505251525u505_5a525152 #march 8
 Yshee-1505356505u505_5a535650
